@@ -12,6 +12,7 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+
   const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export function TaskList() {
       return;
     }
 
-    const generateID = Math.floor(Math.random() * (10000 - 1)) + 1;
+    const generateID = Math.floor(Math.random() * (100000 - 1)) + 1;
 
     setTasks([
       ...tasks,
@@ -35,6 +36,8 @@ export function TaskList() {
         isComplete: false,
       },
     ]);
+
+    setNewTaskTitle('');
   }
 
   function handleToggleTaskCompletion(id: number) {
@@ -43,7 +46,11 @@ export function TaskList() {
       tasks.filter((task) =>
         task.id !== id
           ? task
-          : (task.id, task.title, (task.isComplete = !task.isComplete))
+          : {
+              id: task.id,
+              title: task.title,
+              isComplete: (task.isComplete = !task.isComplete),
+            }
       )
     );
   }
@@ -59,6 +66,7 @@ export function TaskList() {
         <h2>Minhas tasks</h2>
 
         <div className="input-group">
+          {isEmpty && <span>Por favor, preencha o campo!</span>}
           <input
             type="text"
             className={isEmpty ? 'error' : ''}

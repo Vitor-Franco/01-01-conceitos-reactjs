@@ -23,18 +23,48 @@ section.task-list {
       gap: 0.25rem;
       align-items: center;
 
+      position: relative;
+
       background: #fff;
       font-size: 16px;
+
+      span {
+        position: absolute;
+        left: -83%;
+        
+        color: #fff;
+        background: #e64c4c;
+        
+        max-width: 200px;
+        
+        font-size: 0.8rem;
+        text-align: center;
+        
+        border-radius: 5px;
+        padding: 0.8rem 0.8rem;
+
+      }
+
+      span:before {
+        content: "";
+        position: absolute;
+        left:100%;
+        width: 0; 
+        height: 0; 
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 5px solid #e64c4c;
+      }
 
       input {
         flex: 1;
         background: var(--background);
         border: 0;
+        outline: 0;
         color: var(--text);
         padding: 12px 24px;
 
         border-radius: 8px;
-        border: 0;
 
         &::placeholder {
           color: var(--text-light);
@@ -49,6 +79,7 @@ section.task-list {
         font-weight: 600;
         border-radius: 8px;
         border: 0;
+        outline: 0;
         background: var(--green);
         color: #fff;
         display: flex;
