@@ -10,7 +10,15 @@ interface Task {
 }
 
 export function TaskList() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const data = localStorage.getItem('@RocketTaskList');
+
+    if (data) {
+      return JSON.parse(data);
+    }
+
+    return [];
+  });
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const [isEmpty, setIsEmpty] = useState(false);
@@ -28,36 +36,42 @@ export function TaskList() {
 
     const generateID = Math.floor(Math.random() * (100000 - 1)) + 1;
 
-    setTasks([
+    const totalTasks = [
       ...tasks,
       {
         id: generateID,
         title: newTaskTitle,
         isComplete: false,
       },
-    ]);
+    ];
 
+    setTasks(totalTasks);
+    localStorage.setItem('@RocketTaskList', JSON.stringify(totalTasks));
     setNewTaskTitle('');
   }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
-    setTasks(
-      tasks.filter((task) =>
-        task.id !== id
-          ? task
-          : {
-              id: task.id,
-              title: task.title,
-              isComplete: (task.isComplete = !task.isComplete),
-            }
-      )
+    const handledTasks = tasks.filter((task) =>
+      task.id !== id
+        ? task
+        : {
+            id: task.id,
+            title: task.title,
+            isComplete: (task.isComplete = !task.isComplete),
+          }
     );
+
+    setTasks(handledTasks);
+    localStorage.setItem('@RocketTaskList', JSON.stringify(handledTasks));
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
-    setTasks(tasks.filter((task) => task.id !== id));
+    const handledTasks = tasks.filter((task) => task.id !== id);
+
+    setTasks(handledTasks);
+    localStorage.setItem('@RocketTaskList', JSON.stringify(handledTasks));
   }
 
   return (
