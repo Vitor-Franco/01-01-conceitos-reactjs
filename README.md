@@ -18,6 +18,7 @@ Este projeto utiliza as seguintes tecnologias:
 
 ## 🔥 Preview
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ce18a521-f135-4123-a09f-e38826843ade/deploy-status)](https://todo-vf.netlify.app/)
 <br>
 
 <p align="center">
