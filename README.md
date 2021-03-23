@@ -39,6 +39,7 @@ Siga o passo-passo abaixo.
 ```bash
 # Instale as dependências
 $ yarn
+
 # Start o projeto
 $ yarn dev
 ```
