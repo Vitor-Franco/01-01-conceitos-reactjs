@@ -1,6 +1,7 @@
 import '../styles/header.scss';
 
 export function Header() {
+  // Componente simples, com importação do SCSS e IMG direto da public
   return (
     <header className="header">
       <div>

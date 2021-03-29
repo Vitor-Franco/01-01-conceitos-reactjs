@@ -3,6 +3,7 @@ import { FiTrash, FiCheckSquare } from 'react-icons/fi';
 
 import '../styles/tasklist.scss';
 
+// Interface com Chaves|Propriedades de cada Task
 interface Task {
   id: number;
   title: string;
@@ -10,6 +11,9 @@ interface Task {
 }
 
 export function TaskList() {
+  // Hook de estado, para toda vez que o componente iniciar pegarmos a referência
+  // do nosso localStorage com todas nossas tasks já adicionadas, ou se não existir,
+  // retornar um array vazio.
   const [tasks, setTasks] = useState<Task[]>(() => {
     const data = localStorage.getItem('@RocketTaskList');
 
@@ -19,23 +23,30 @@ export function TaskList() {
 
     return [];
   });
+  // Estado para mantermos o título da task atualizado conforme o usuário digita.
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
+  // Estado para conferirmos se o campo title está vazio.
   const [isEmpty, setIsEmpty] = useState(false);
 
+  // Se houver mudanças no Estado do Title, queremos que o componente salve no estado
+  // que o campo não está vazio.
   useEffect(() => {
     setIsEmpty(false);
   }, [newTaskTitle]);
 
+  // Tratamos a criação de uma task
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    // se o title estiver vazio, marcamos o estado como "true" e retornamos a função.
     if (newTaskTitle === '') {
       setIsEmpty(true);
       return;
     }
 
+    // Gera um número aleatório de 1 a 100mil
     const generateID = Math.floor(Math.random() * (100000 - 1)) + 1;
 
+    // Cria uma cópia do estado de tasks e adicionamos nossa newTask ao final de tudo.
     const totalTasks = [
       ...tasks,
       {
@@ -45,13 +56,19 @@ export function TaskList() {
       },
     ];
 
+    // Setamos o novo estado com o array acima
     setTasks(totalTasks);
+    // Salvamos no localStorage
     localStorage.setItem('@RocketTaskList', JSON.stringify(totalTasks));
+    // Resetamos o campo do título
     setNewTaskTitle('');
   }
 
+  // Alterna entre task completada ou não.
   function handleToggleTaskCompletion(id: number) {
-    // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    // Fazemos uma verificação para ver qual task tem o mesmo ID que veio como parâmetro na função.
+    // Se o ID for diferente, retornamos a tasks sem modificações;
+    // Se for igual, setamos o valor como o inverso do valor atual dele
     const handledTasks = tasks.filter((task) =>
       task.id !== id
         ? task
@@ -62,7 +79,9 @@ export function TaskList() {
           }
     );
 
+    // Salvamos as tasks Filtradas
     setTasks(handledTasks);
+    // Salvamos as tasks Filtradas no localStorage
     localStorage.setItem('@RocketTaskList', JSON.stringify(handledTasks));
   }
 
@@ -70,7 +89,9 @@ export function TaskList() {
     // Remova uma task da listagem pelo ID
     const handledTasks = tasks.filter((task) => task.id !== id);
 
+    // Salvamos as tasks Filtradas
     setTasks(handledTasks);
+    // Salvamos as tasks Filtradas no localStorage
     localStorage.setItem('@RocketTaskList', JSON.stringify(handledTasks));
   }
 

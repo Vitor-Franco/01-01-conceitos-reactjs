@@ -3,7 +3,7 @@ section.task-list {
   border-radius: 1rem;
 
   margin-top: -10rem;
-  padding: 70px 60px;
+  padding: 4.365rem 3.75rem;
 
   filter: drop-shadow(0px 24px 64px rgba(0, 0, 0, 0.06));
 
@@ -31,26 +31,25 @@ section.task-list {
       span {
         position: absolute;
         left: -83%;
-        
+
         color: #fff;
         background: #e64c4c;
-        
+
         max-width: 200px;
-        
+
         font-size: 0.8rem;
         text-align: center;
-        
+
         border-radius: 5px;
         padding: 0.8rem 0.8rem;
-
       }
 
       span:before {
-        content: "";
+        content: '';
         position: absolute;
-        left:100%;
-        width: 0; 
-        height: 0; 
+        left: 100%;
+        width: 0;
+        height: 0;
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         border-left: 5px solid #e64c4c;
@@ -192,5 +191,28 @@ section.task-list {
         }
       }
     }
+  }
+}
+
+@media (max-width: 920px) {
+  section.task-list header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 720px) {
+  section.task-list header .input-group span {
+    left: 0;
+    top: 105%;
+  }
+  section.task-list header h2 {
+    margin-bottom: 1rem;
+  }
+
+  section.task-list header .input-group span:before {
+    position: absolute;
+    top: -7px;
+    left: 10%;
+    transform: rotate(-85deg);
   }
 }
